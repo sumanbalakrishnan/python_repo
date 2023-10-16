@@ -74,3 +74,4 @@ def prepare_url(endpoint, **kwargs):
 def save_vulnerabilities(nvd_vulnerabilities):
     pass
 
+
