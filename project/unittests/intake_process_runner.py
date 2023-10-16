@@ -12,3 +12,4 @@ from lambda_functions import  intake_nvd_vulnerabilities
 os.environ["env"] = "dev"
 
 intake_nvd_vulnerabilities.handler(None,None)
+
