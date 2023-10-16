@@ -9,16 +9,20 @@ pipeline {
         }
         stage("Build") {
             steps {
-                sh "python3 -m venv venv"
-                sh ". venv/bin/activate"
-                sh "pip install -r requirements.txt"
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh "python3 -m venv venv"
+                    sh ". venv/bin/activate"
+                    sh "pip install -r requirements.txt"
+                }
             }
         }
 
         stage("Package") {
             steps {
-                bat "zip -r function.zip ."
-                archiveArtifacts artifacts: 'function.zip', fingerprint: true
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh "zip -r function.zip ."
+                    archiveArtifacts artifacts: 'function.zip', fingerprint: true
+                }
             }
         }
 
