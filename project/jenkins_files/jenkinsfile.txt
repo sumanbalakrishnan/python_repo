@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Checkout") {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f2adf1c4-f313-4d39-847c-305d55564456', url: 'https://github.com/sumanbalakrishnan/python_repo.git']]])
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "python3 -m venv venv"
+                sh ". venv/bin/activate"
+                sh "pip install -r requirements.txt"
+            }
+        }
+
+        stage("Package") {
+            steps {t
+                sh "zip -r function.zip ."
+                archiveArtifacts artifacts: 'function.zip', fingerprint: true
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                step([$class: 'LambdaCreateFunctionBuilder', credentialsId: 'cb6a987d-890f-42d3-87c0-47838fe32eae', region: 'us-east-1', functionName: 'python-proj', runtime: 'python3.9', artifact: 'function.zip', handler: 'index.handler', role: 'arn:aws:iam::710566004402:role/JenkinsAccess'])
+            }
+        }
+    }
+}
