@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f2adf1c4-f313-4d39-847c-305d55564456', url: 'https://github.com/sumanbalakrishnan/python_repo.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f2adf1c4-f313-4d39-847c-305d55564456', url: 'https://github.com/sumanbalakrishnan/python_repo.git']]])
             }
         }
         stage("Build") {
