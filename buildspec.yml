@@ -1,14 +1,15 @@
 version: 0.2
-        phases:
-          install:
-            commands:
-              - echo Installing dependencies...
-              # Add commands to install dependencies if needed
-          build:
-            commands:
-              - echo Zipping Lambda function...
-              - zip -r function.zip .
-          post_build:
-            commands:
-              - echo Updating Lambda function code...
-              - aws lambda update-function-code --function-name restapifunction --zip-file fileb://function.zip
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+  build:
+    commands:
+      - echo Zipping Lambda function...
+      - zip -r function.zip .
+  post_build:
+    commands:
+      - echo Updating Lambda function code...
+      - >-
+        aws lambda update-function-code --function-name restapifunction
+        --zip-file fileb://function.zip
