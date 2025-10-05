@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>AWS Hosted Webpage</title>
+      <!--External lib Scripts-->
+      <script src="js/bootstrap.min.js"> </script>
+      <script src="js/jquery-3.7.1.min.js"></script>
+      <script src="js/aws-sdk-2.1293.0.min.js"></script>
+      <!--css-->
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      </link>
+   </head>
+   <body>
+    <div>
+        <button id="signIn">Sign In</button>
+    </div>
+
+   </body>
+   <script type="text/javascript">
+       AWS.config.region = 'us-east-1'
+       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-east-1_SA704TYoA'
+        });
+       var poolData = {
+        UserPoolId: 'us-east-1_SA704TYoA',
+        ClientId: '5oectlgibq0aaj6af0imt32kp4'
+        };
+        //var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+      $(document).ready(function () {
+          // Call the function on page load
+          redirectIfUnauthenticated();
+      })
+      $(document).on('load', function () {
+          console.log("Page Load")
+      })
+      function checkUserSession() {
+        return false
+      }
+      function redirectIfUnauthenticated() {
+        // This part would require a library or custom logic to check the session/tokens.
+        // In a real application, you would check for a valid session or tokens.
+        // For a simple front-end check, you might look for a token in local storage.
+        const isUserAuthenticated = checkUserSession(); // This is a placeholder function.
+
+        if (!isUserAuthenticated) {
+        // /login?client_id=&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fd84l1y8p4kdic.cloudfront.net
+            // Build and redirect to the Hosted UI URL if no valid session is found.
+            const userPoolDomain = "https://us-east-1sa704tyoa.auth.us-east-1.amazoncognito.com";
+            const clientId = "5oectlgibq0aaj6af0imt32kp4";
+            const redirectUri = "https://d84l1y8p4kdic.cloudfront.net";
+            const cognitoAuthUrl = `${userPoolDomain}/oauth2/authorize?` +
+                `response_type=code&` +
+                `client_id=${clientId}&` +
+                `redirect_uri=${redirectUri}`;
+
+            window.location.replace(cognitoAuthUrl);
+        }
+    }
+
+
+   </script>
+</html>
