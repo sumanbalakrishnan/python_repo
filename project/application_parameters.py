@@ -4,8 +4,6 @@ Date : 20-07-2023
 
 General application configuration parameters
 """
-
-
 import os
 
 application_parameters = {
