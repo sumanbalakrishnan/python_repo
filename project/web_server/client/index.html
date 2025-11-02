@@ -5,9 +5,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>AWS Hosted Webpage</title>
       <!--External lib Scripts-->
-      <script src="js/bootstrap.min.js"> </script>
-      <script src="js/jquery-3.7.1.min.js"></script>
-      <script src="js/aws-sdk-2.1293.0.min.js"></script>
+      <script src="lib/bootstrap.min.js"> </script>
+      <script src="lib/jquery-3.7.1.min.js"></script>
+      <script src="lib/aws-sdk-2.1293.0.min.js"></script>
+       <script src="lib/amazon-cognito-identity.min.js"></script>
       <!--css-->
       <link rel="stylesheet" href="css/bootstrap.min.css">
       </link>
@@ -27,10 +28,11 @@
         UserPoolId: 'us-east-1_SA704TYoA',
         ClientId: '5oectlgibq0aaj6af0imt32kp4'
         };
-        //var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
       $(document).ready(function () {
           // Call the function on page load
+
           redirectIfUnauthenticated();
       })
       $(document).on('load', function () {
